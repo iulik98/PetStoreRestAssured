@@ -1,7 +1,7 @@
 package api.endpoints;
 
+import api.payload.Order;
 import api.utilities.PropertiesConfigReader;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -12,13 +12,12 @@ import static io.restassured.RestAssured.given;
 public class StoreEndPoints {
 
 
-    public static Response placeAnOrder(String payload) {
+    public static Response placeAnOrder(Order payload) {
         Map<String, Object> headers = new HashMap<>();
         headers.put("accept", "application/json");
         headers.put("Content-Type", "application/json");
         return given()
                 .headers(headers)
-                .accept(ContentType.JSON)
                 .baseUri(PropertiesConfigReader.getProperty("BASE_URL"))
                 .body(payload)
                 .when()

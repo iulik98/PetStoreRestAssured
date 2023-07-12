@@ -1,114 +1,89 @@
 package api.payload;
 
 import api.utilities.FakeDataManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
+import javax.annotation.Generated;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "id",
+        "username",
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "phone",
+        "userStatus"
+})
+@Generated("jsonschema2pojo")
 public class User {
-    @JsonProperty
-    private String userName;
-    @JsonProperty
-    private String firstName;
-    @JsonProperty
-    private String lastName;
-    @JsonProperty
-    private String email;
-    @JsonProperty
-    private String password;
-    @JsonProperty
-    private String phone;
-    @JsonProperty
-    private int userStatus = 0;
-    @JsonProperty
-    private transient int id = 0;
 
-    public User(String userName, String firstName, String lastName, String email, String password, String phone, int id) {
-        this.userName = userName;
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("firstName")
+    private String firstName;
+    @JsonProperty("lastName")
+    private String lastName;
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("password")
+    private String password;
+    @JsonProperty("phone")
+    private String phone;
+    @JsonProperty("userStatus")
+    private Integer userStatus;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+
+    private static String apiKey;
+
+    /**
+     * No args constructor for use in serialization
+     */
+    public User() {
+    }
+
+    /**
+     * @param firstName
+     * @param lastName
+     * @param password
+     * @param userStatus
+     * @param phone
+     * @param id
+     * @param email
+     * @param username
+     */
+    public User(Integer id, String username, String firstName, String lastName, String email, String password, String phone, Integer userStatus) {
+        super();
+        this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.id = id;
-    }
-
-    public static String createJSONArray(User[] users) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[\n");
-        for (int i = 0; i < users.length; i++) {
-            if (i < users.length - 1) {
-                sb.append("{\n" +
-                        "  \"id\": " + users[i].id + ",\n" +
-                        "  \"username\": \"" + users[i].userName + "\",\n" +
-                        "  \"firstName\": \"" + users[i].firstName + "\",\n" +
-                        "  \"lastName\": \"" + users[i].lastName + "\",\n" +
-                        "  \"email\": \"" + users[i].email + "\",\n" +
-                        "  \"password\": \"" + users[i].password + "\",\n" +
-                        "  \"phone\": \"" + users[i].phone + "\",\n" +
-                        "  \"userStatus\": " + users[i].userStatus + "\n" +
-                        "},\n");
-            } else {
-                sb.append("{\n" +
-                        "  \"id\": " + users[i].id + ",\n" +
-                        "  \"username\": \"" + users[i].userName + "\",\n" +
-                        "  \"firstName\": \"" + users[i].firstName + "\",\n" +
-                        "  \"lastName\": \"" + users[i].lastName + "\",\n" +
-                        "  \"email\": \"" + users[i].email + "\",\n" +
-                        "  \"password\": \"" + users[i].password + "\",\n" +
-                        "  \"phone\": \"" + users[i].phone + "\",\n" +
-                        "  \"userStatus\": " + users[i].userStatus + "\n" +
-                        "}\n");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
-    public static String createJSONList(List<User> users) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[\n");
-        for (int i = 0; i < users.size(); i++) {
-            if (i < users.size() - 1) {
-                sb.append("{\n" +
-                        "  \"id\": " + users.get(i).id + ",\n" +
-                        "  \"username\": \"" + users.get(i).userName + "\",\n" +
-                        "  \"firstName\": \"" + users.get(i).firstName + "\",\n" +
-                        "  \"lastName\": \"" + users.get(i).lastName + "\",\n" +
-                        "  \"email\": \"" + users.get(i).email + "\",\n" +
-                        "  \"password\": \"" + users.get(i).password + "\",\n" +
-                        "  \"phone\": \"" + users.get(i).phone + "\",\n" +
-                        "  \"userStatus\": " + users.get(i).userStatus + "\n" +
-                        "},\n");
-            } else {
-                sb.append("{\n" +
-                        "  \"id\": " + users.get(i).id + ",\n" +
-                        "  \"username\": \"" + users.get(i).userName + "\",\n" +
-                        "  \"firstName\": \"" + users.get(i).firstName + "\",\n" +
-                        "  \"lastName\": \"" + users.get(i).lastName + "\",\n" +
-                        "  \"email\": \"" + users.get(i).email + "\",\n" +
-                        "  \"password\": \"" + users.get(i).password + "\",\n" +
-                        "  \"phone\": \"" + users.get(i).phone + "\",\n" +
-                        "  \"userStatus\": " + users.get(i).userStatus + "\n" +
-                        "}\n");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
+        this.userStatus = userStatus;
     }
 
     public static User[] createArrayUsers(int n) {
         User[] userArray = new User[n];
         for (int i = 0; i < n; i++) {
             int id = FakeDataManager.getRandomID();
+            int userStatus = FakeDataManager.getRandomID();
             String username = FakeDataManager.getRandomUserName();
             String firstName = FakeDataManager.getRandomFirstName();
             String lastName = FakeDataManager.getRandomLastName();
             String email = FakeDataManager.getRandomEmail();
             String password = FakeDataManager.getRandomPassword(5, 10);
             String phone = FakeDataManager.getRandomPhone();
-            userArray[i] = new User(username, firstName, lastName, email, password, phone, id);
+            userArray[i] = new User(id, username, firstName, lastName, email, password, phone, userStatus);
         }
         return userArray;
     }
@@ -117,107 +92,114 @@ public class User {
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             int id = FakeDataManager.getRandomID();
+            int userStatus = FakeDataManager.getRandomID();
             String username = FakeDataManager.getRandomUserName();
             String firstName = FakeDataManager.getRandomFirstName();
             String lastName = FakeDataManager.getRandomLastName();
             String email = FakeDataManager.getRandomEmail();
             String password = FakeDataManager.getRandomPassword(5, 10);
             String phone = FakeDataManager.getRandomPhone();
-            userList.add(new User(username, firstName, lastName, email, password, phone, id));
+            userList.add(new User(id, username, firstName, lastName, email, password, phone, userStatus));
         }
         return userList;
     }
 
-    public int getId() {
+    @JsonProperty("id")
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    @JsonProperty("id")
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    @JsonProperty("username")
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    @JsonProperty("username")
+    public void setUsername(String username) {
+        this.username = username;
     }
 
+    @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
     }
 
+    @JsonProperty("firstName")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
     }
 
+    @JsonProperty("lastName")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @JsonProperty("email")
     public String getEmail() {
         return email;
     }
 
+    @JsonProperty("email")
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @JsonProperty("password")
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @JsonProperty("phone")
     public String getPhone() {
         return phone;
     }
 
+    @JsonProperty("phone")
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getUserStatus() {
+    @JsonProperty("userStatus")
+    public Integer getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(int userStatus) {
+    @JsonProperty("userStatus")
+    public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", userStatus=" + userStatus +
-                ", id=" + id +
-                '}';
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
-    public String createJSON() {
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
+    }
 
-        return "{\n" +
-                "  \"id\": " + id + ",\n" +
-                "  \"username\": \"" + userName + "\",\n" +
-                "  \"firstName\": \"" + firstName + "\",\n" +
-                "  \"lastName\": \"" + lastName + "\",\n" +
-                "  \"email\": \"" + email + "\",\n" +
-                "  \"password\": \"" + password + "\",\n" +
-                "  \"phone\": \"" + phone + "\",\n" +
-                "  \"userStatus\": " + userStatus + "\n" +
-                "}";
+    public static String getApiKey() {
+        return apiKey;
+    }
+
+    public static void setApiKey(String apiKey) {
+        apiKey = apiKey;
     }
 
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesConfigReader {
-    private static final String CONFIG_FILE_PATH = "src/test/resources/userEndpoints.properties";
+    private static final String CONFIG_FILE_PATH = "src/test/resources/endpoints.properties";
     private static Properties properties;
 
     private static void initProperties() {
